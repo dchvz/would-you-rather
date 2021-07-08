@@ -1,9 +1,9 @@
-import logo from '../logo.svg';
 import React,{ Component } from 'react'
 import '../App.css';
 import { connect } from 'react-redux'
 import { getInitialData } from '../actions/shared'
 import Nav from './Nav'
+import Modal from './Modal'
 
 class App extends Component {
   componentDidMount () {
@@ -12,21 +12,8 @@ class App extends Component {
   render () {
     return (
       <div className="App">
-        <Nav></Nav>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Nav />
+        <Modal />
       </div>
     );
   }
