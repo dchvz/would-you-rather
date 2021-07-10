@@ -3,8 +3,8 @@ import '../App.css';
 import { connect } from 'react-redux'
 import { getInitialData } from '../actions/shared'
 import Nav from './Nav'
-import Modal from './Modal'
-
+// import Modal from './Modal'
+import Dashboard from './Dashboard';
 class App extends Component {
   componentDidMount () {
     this.props.dispatch(getInitialData())
@@ -13,7 +13,8 @@ class App extends Component {
     return (
       <div className="App">
         <Nav />
-        <Modal />
+        <Dashboard />
+        {/* <Modal /> */}
       </div>
     );
   }
