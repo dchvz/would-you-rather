@@ -37,7 +37,6 @@ class Modal extends Component {
    */
   handleUserLogin = (id) => {
     const { dispatch } = this.props
-    console.log('calling from here')
     dispatch(setAuthedUser(id))
   }
 
