@@ -3,14 +3,10 @@ import { connect } from 'react-redux'
 import Card from './Card'
 
 class Dashboard extends Component {
-  // TODO add loader
-  // GET the authed user to know which ones are replied already
-  // TODO get questions and filter by current state
-  // TODO pass question info to the cards
-  // TODO card should render the question and its details based on the Id
   state = {
     showAnswered: true
   }
+
   /**
    * changes the value of the filter variable
    */
@@ -23,7 +19,8 @@ class Dashboard extends Component {
 
   render () {
     let { showAnswered } = this.state
-    let { questionIds } = this.props
+    let { answeredQuestions, unAnsweredQuestions } = this.props
+    const filteredQuestions = showAnswered ? answeredQuestions : unAnsweredQuestions
     const buttonBG = showAnswered ? 'bg-cerise-red-500' : ''
     const buttonSpacing = showAnswered ? 'translate-x-3' : ''
     const activeQuestion = showAnswered ? 'Check your answered questions' : 'Check some new questions'
@@ -31,7 +28,7 @@ class Dashboard extends Component {
       <div className="flex flex-col justify-center">
         <p className="font-bold text-2xl">{ activeQuestion }</p>
         <div
-          className={`w-36 h-10 mx-auto mt-4 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out ${buttonBG}`}
+          className={`w-36 h-10 mx-auto mt-4 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out cursor-pointer ${buttonBG}`}
           onClick={this.handleAnswerChange}
         >
           {showAnswered?<p className="text-white font-medium pl-4">Answered</p>: ''}
@@ -39,8 +36,8 @@ class Dashboard extends Component {
           {!showAnswered?<p className="text-white font-medium pl-1">Unanswered</p>: ''}
         </div>
         <div className="flex flex-wrap gap-10 justify-center my-10">
-          {questionIds.map(id => (
-            <Card key={id} id={id} avatarUrl = {'https://pbs.twimg.com/media/EUZXL2zUcAEONHS.jpg'}/>
+          {filteredQuestions.map(id => (
+            <Card key={id} id={id}/>
           ))}
         </div>
       </div>
@@ -48,15 +45,13 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps ({users, questions}) {
-  // const answeredQuestions = authedUser.questions
-  // const unAnsweredQuestions = Object.keys(questions).filter(x => !answeredQuestions.includes(x))
+function mapStateToProps ({users, questions, authedUser}) {
+  const questionIds = Object.keys(questions).sort((a,b) => questions[b].timestamp - questions[a].timestamp)
+  const answeredQuestions = Object.keys(users[authedUser].answers)
+  const unAnsweredQuestions = questionIds.filter(question => !answeredQuestions.includes(question))
   return {
-    users,
-    // answeredQuestions: answeredQuestions,
-    // unAnsweredQuestions: unAnsweredQuestions,
-    questionIds: Object.keys(questions)
-      .sort((a,b) => questions[b].timestamp - questions[a].timestamp)
+    answeredQuestions: answeredQuestions,
+    unAnsweredQuestions: unAnsweredQuestions,
   }
 }
 
