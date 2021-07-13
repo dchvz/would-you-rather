@@ -29,7 +29,7 @@ class Modal extends Component {
   handleUserLogin = (id) => {
     const { dispatch } = this.props
     dispatch(setAuthedUser(id))
-    this.props.history.push('dashboard')
+    this.props.history.push('/')
   }
 
   render () {

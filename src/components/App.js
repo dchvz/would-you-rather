@@ -2,12 +2,13 @@ import React,{ Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
-import Fragment from 'render-fragment'
 import { getInitialData } from '../actions/shared'
+import { ProtectedRoute } from './ProtectedRoute'
+import Fragment from 'render-fragment'
 import Nav from './Nav'
 import Modal from './Modal'
-import Dashboard from './Dashboard';
-import { ProtectedRoute } from "./ProtectedRoute";
+import Dashboard from './Dashboard'
+import PollDetails from './PollDetails'
 import '../App.css';
 
 class App extends Component {
@@ -27,8 +28,9 @@ class App extends Component {
               ? null
               : <div>
                 <Switch>
-                <Route exact path="/" component={Modal} userRedux={users} />
-                <ProtectedRoute path='/dashboard' exact component={Dashboard} isLogged={isLogged} />
+                <ProtectedRoute path='/' exact component={Dashboard} isLogged={isLogged} />
+                <ProtectedRoute path='/poll/:id' component={PollDetails} isLogged={isLogged}/>
+                <Route exact path="/login" component={Modal} userRedux={users} />
                 <Route path="*" component={() => "404 NOT FOUND"} />
                 </Switch>
               </div>
@@ -48,4 +50,4 @@ function mapStateToProps ({users, questions, authedUser}) {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)

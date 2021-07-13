@@ -32,9 +32,10 @@ class Nav extends Component {
           {
             currentUser
             ?
-            <div className="flex flex-row space-x-4 absolute right-10">
+            <div className="flex flex-wrap space-x-4 absolute right-10">
+              <p className="my-auto">{currentUser.name}</p>
               <Avatar avatarURL={currentUser.avatarURL} dimensions={'h-8 w-8'} />
-              <NavLink to="/" exact className="cursor-pointer" onClick={this.handleLogOut}>
+              <NavLink to="/" exact className="flex flex-wrap content-center cursor-pointer" onClick={this.handleLogOut}>
                 <BiLogOut className="h-6 w-6 cursor-pointer my-auto"/>
               </NavLink>
             </div>

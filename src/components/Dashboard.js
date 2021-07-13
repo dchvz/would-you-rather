@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Card from './Card'
+import Poll from './Poll'
 
 class Dashboard extends Component {
   state = {
-    showAnswered: true
+    showAnswered: false
   }
 
   /**
@@ -37,7 +37,7 @@ class Dashboard extends Component {
         </div>
         <div className="flex flex-wrap gap-10 justify-center my-10">
           {filteredQuestions.map(id => (
-            <Card key={id} id={id}/>
+            <Poll key={id} id={id}/>
           ))}
         </div>
       </div>

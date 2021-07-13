@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Avatar from './Avatar'
 
-class Card extends Component {
+class Poll extends Component {
+  toDetails = (e, id) => {
+    e.preventDefault()
+    this.props.history.push(`/poll/${id}`)
+  }
+  // TODO change the component to use slots
   render () {
-    const { question, asker } = this.props
+    const { question, asker, id } = this.props
     return (
-      <div className="w-1/4">
-        <div className="flex flex-wrap content-center h-64 bg-gradient-to-b from-cerise-red-600 to-cerise-red-500 shadow-lg rounded-t-lg cursor-pointer">
+      <div className="w-1/4 curso2r-pointer" onClick={(e) => this.toDetails(e, id)}>
+        <div className="flex flex-wrap content-center h-64 bg-gradient-to-b from-cerise-red-600 to-cerise-red-500 shadow-lg rounded-t-lg">
+          {/* <div className="top"></div>{props.top} <div/> */}
           <p className="text-white font-normal px-4 my-auto">
             {`Would you rather ${question.optionOne.text} OR ${question.optionTwo.text}?`}
           </p>
@@ -34,4 +41,4 @@ function mapStateToProps ({users, questions}, props) {
   }
 }
 
-export default connect(mapStateToProps)(Card)
+export default withRouter(connect(mapStateToProps)(Poll))
