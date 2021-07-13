@@ -14,7 +14,6 @@ const links = [
 // TODO hacer que cuando el authed user sea nulo, solo se despliegue la seleccion de usuario
 class Nav extends Component {
   handleLogOut = () => {
-    console.log('the log out is being handled')
     const { dispatch } = this.props
     dispatch(setAuthedUser(null))
   }
@@ -24,7 +23,7 @@ class Nav extends Component {
       <nav className="py-4">
         <ul className="flex flex-row">
           {links.map(link => (
-            <li className="ml-10">
+            <li className="ml-10" key={link.route}>
               <NavLink to={link.route} exact className="cursor-pointer">
                 {link.name}
               </NavLink>

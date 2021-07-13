@@ -1,23 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setAuthedUser } from '../actions/authedUser'
+import { withRouter } from 'react-router-dom';
 import Avatar from './Avatar'
 import ComboBox from './ComboBox'
 
 class Modal extends Component {
   state = {
-    selectedUser: {
-      id: 'sarahedo',
-      name: 'Sarah Edo',
-      avatarURL: 'https://images.generated.photos/pmImbj_l9p4yqkMNU34BcZa8CwK8aBc9Upp3MZvMtrc/rs:fit:256:256/Z3M6Ly9nZW5lcmF0/ZWQtcGhvdG9zL3Yz/XzA5ODU5MDcuanBn.jpg',
-      answers: {
-        "8xf0y6ziyjabvozdd253nd": 'optionOne',
-        "6ni6ok3ym7mf1p33lnez": 'optionTwo',
-        "am8ehyc8byjqgar0jgpub9": 'optionTwo',
-        "loxhs1bqm25b708cmbf3g": 'optionTwo'
-      },
-      questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
-    }
+    allusers: this.props.users,
+    selectedUser: this.props.users['sarahedo']
   }
 
   /**
@@ -32,12 +23,13 @@ class Modal extends Component {
   }
 
   /**
-   * dispatches the action to authenticate the user in the rest of the app
+   * dispatches the action to authenticate the user in the rest of the app, redirects
    * @param {string} id
    */
   handleUserLogin = (id) => {
     const { dispatch } = this.props
     dispatch(setAuthedUser(id))
+    this.props.history.push('dashboard')
   }
 
   render () {
@@ -56,7 +48,7 @@ class Modal extends Component {
             <ComboBox items={userIds} handleUserUpdate={this.handleUserUpdate} />
             <button
               className="w-64 bg-cerise-red-500 hover:bg-cerise-red-400 text-white font-bold py-2 px-4 rounded-full mb-4"
-              onClick={this.handleUserLogin(selectedUser.id)}
+              onClick={() => this.handleUserLogin(selectedUser.id)}
             >
               Accept
             </button>
@@ -67,10 +59,10 @@ class Modal extends Component {
   }
 }
 
-function mapStateToProps ({users}) {
+function mapStateToProps ({users}, props) {
   return {
     users
   }
 }
 
-export default connect(mapStateToProps)(Modal);
+export default withRouter(connect(mapStateToProps)(Modal))

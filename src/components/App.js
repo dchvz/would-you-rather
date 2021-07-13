@@ -1,4 +1,5 @@
 import React,{ Component } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 import Fragment from 'render-fragment'
@@ -6,14 +7,15 @@ import { getInitialData } from '../actions/shared'
 import Nav from './Nav'
 import Modal from './Modal'
 import Dashboard from './Dashboard';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-
+import { ProtectedRoute } from "./ProtectedRoute";
 import '../App.css';
+
 class App extends Component {
   componentDidMount () {
     this.props.dispatch(getInitialData())
   }
   render () {
+    const { loading, isLogged, users } = this.props
     return (
       <Router>
         <Fragment>
@@ -21,13 +23,16 @@ class App extends Component {
           <div className="App">
             <Nav />
             {
-              this.props.loading === true
+              loading === true
               ? null
               : <div>
-                <Route path='/' exact component={Dashboard} />
+                <Switch>
+                <Route exact path="/" component={Modal} userRedux={users} />
+                <ProtectedRoute path='/dashboard' exact component={Dashboard} isLogged={isLogged} />
+                <Route path="*" component={() => "404 NOT FOUND"} />
+                </Switch>
               </div>
             }
-            {/* <Modal /> */}
           </div>
         </Fragment>
       </Router>
@@ -35,9 +40,12 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({authedUser}) {
+function mapStateToProps ({users, questions, authedUser}) {
   return {
-    loading: authedUser === null
+    loading: Object.keys(users).length === 0 && Object.keys(questions).length === 0,
+    isLogged: authedUser !== null,
+    users
   }
 }
+
 export default connect(mapStateToProps)(App);
