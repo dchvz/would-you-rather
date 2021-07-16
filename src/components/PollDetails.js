@@ -3,7 +3,8 @@ import { withRouter } from "react-router"
 import { connect } from 'react-redux'
 import Poll from './Poll'
 
-// TODO add statistics tab
+// TODO register answer action
+// TODO create component to
 class PollDetails extends Component {
   getFirstQuestion = (name) => {
     alert(this.props.questions[name].optionOne.text)
@@ -13,38 +14,39 @@ class PollDetails extends Component {
   }
   render () {
     const id = this.props.match.params.id
-    const { questions } = this.props
+    const { questions, users } = this.props
+    const questionAuthor = questions[id].author
     const questionOne = questions[id].optionOne.text
     const questionTwo = questions[id].optionTwo.text
     return (
-      <div>
-        <p className="font-bold text-2xl">Would you rather?</p>
-        <div className="flex flex-wrap gap-4 content-center justify-center my-20">
-          <Poll id={id} onClickFunction={this.getFirstQuestion} dimensions={'h-96 w-full'}
-            cardText = {
-              <p className="text-white font-normal text-xl">
-                {questionOne}
-              </p>
-            }
-          />
-          <div className="flex flex-wrap content-center h-14 w-14 bg-gray-200 shadow font-medium px-4 rounded-full my-auto">
-            OR
+      <div className="flex flex-col justify-center content-center">
+        <div className="shadow-2xl mt-10 w-2/3 mx-auto my-auto bg-white rounded-b-lg py-12">
+          <p className="font-bold text-2xl mb-10">{questionAuthor} asks would you rather?</p>
+          <div className="flex flex-wrap gap-4 content-center justify-center">
+            <Poll id={id} onClickFunction={this.getFirstQuestion} dimensions={'h-96 w-full'} layout={'w-2/5'}
+              cardText = {
+                <p className="text-white font-normal text-xl">
+                  {questionOne}
+                </p>
+              }
+            />
+              <Poll id={id} onClickFunction={this.getSecondQuestion} dimensions={'h-96 w-full'} layout={'w-2/5'}
+                cardText = {
+                  <p className="text-white font-normal text-xl">
+                    {questionTwo}
+                  </p>
+                }
+              />
           </div>
-          <Poll id={id} onClickFunction={this.getSecondQuestion} dimensions={'h-96 w-full'}
-            cardText = {
-              <p className="text-white font-normal text-xl">
-                {questionTwo}
-              </p>
-            }
-          />
         </div>
       </div>
     )
   }
 }
-function mapStateToProps ({questions}) {
+function mapStateToProps ({questions, users}) {
   return {
-    questions
+    questions,
+    users
   }
 }
 

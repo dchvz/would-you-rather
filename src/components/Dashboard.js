@@ -40,7 +40,7 @@ class Dashboard extends Component {
         </div>
         <div className="flex flex-wrap gap-10 justify-center my-10">
           {filteredQuestions.map(id => (
-            <Poll key={id} id={id} onClickFunction={this.toDetails} dimensions={'h-64 w-full'}
+            <Poll key={id} id={id} onClickFunction={this.toDetails} dimensions={'h-64 w-full'} layout={'w-1/4'}
               cardText = {
                 <p className="text-white font-normal">
                   {`Would you rather ${questions[id].optionOne.text} OR ${questions[id].optionTwo.text}?`}
