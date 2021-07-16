@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import FooterDetails from './FooterDetails'
 import Poll from './Poll'
-
 class Dashboard extends Component {
   state = {
     showAnswered: false
   }
 
-  /**
-   * changes the value of the filter variable
-   */
   handleAnswerChange = () => {
     const answer = !this.state.showAnswered
     this.setState(() => ({
@@ -17,9 +15,14 @@ class Dashboard extends Component {
     }));
   }
 
+  toDetails = (id) => {
+    const pollRoute = `/poll/${id}`
+    this.props.history.push(pollRoute)
+  }
+
   render () {
     let { showAnswered } = this.state
-    let { answeredQuestions, unAnsweredQuestions } = this.props
+    let { answeredQuestions, unAnsweredQuestions, questions,users } = this.props
     const filteredQuestions = showAnswered ? answeredQuestions : unAnsweredQuestions
     const buttonBG = showAnswered ? 'bg-cerise-red-500' : ''
     const buttonSpacing = showAnswered ? 'translate-x-3' : ''
@@ -37,7 +40,16 @@ class Dashboard extends Component {
         </div>
         <div className="flex flex-wrap gap-10 justify-center my-10">
           {filteredQuestions.map(id => (
-            <Poll key={id} id={id}/>
+            <Poll key={id} id={id} onClickFunction={this.toDetails} dimensions={'h-64 w-full'}
+              cardText = {
+                <p className="text-white font-normal">
+                  {`Would you rather ${questions[id].optionOne.text} OR ${questions[id].optionTwo.text}?`}
+                </p>
+              }
+              cardFooter = {
+                <FooterDetails id={id} asker={users[questions[id].author]} />
+              }
+            />
           ))}
         </div>
       </div>
@@ -52,7 +64,9 @@ function mapStateToProps ({users, questions, authedUser}) {
   return {
     answeredQuestions: answeredQuestions,
     unAnsweredQuestions: unAnsweredQuestions,
+    questions,
+    users
   }
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default withRouter(connect(mapStateToProps)(Dashboard))
