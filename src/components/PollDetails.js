@@ -1,52 +1,63 @@
 import React, {Component} from 'react'
 import { withRouter } from "react-router"
 import { connect } from 'react-redux'
+import Avatar from './Avatar'
 import Poll from './Poll'
 
-// TODO register answer action
-// TODO create component to
+// TODO create an action creator and pass it as props
+// TODO call an action creator to register the answer
+// TODO show the results of the poll
 class PollDetails extends Component {
-  getFirstQuestion = (name) => {
-    alert(this.props.questions[name].optionOne.text)
+  capitalize = word => {
+    const lower = word.toLowerCase();
+    return word.charAt(0).toUpperCase() + lower.slice(1);
   }
-  getSecondQuestion = (name) => {
-    alert(this.props.questions[name].optionTwo.text)
+
+  register = () => {
+
   }
+
   render () {
-    const id = this.props.match.params.id
-    const { questions, users } = this.props
-    const questionAuthor = questions[id].author
-    const questionOne = questions[id].optionOne.text
-    const questionTwo = questions[id].optionTwo.text
+    const { question, asker } = this.props
     return (
-      <div className="flex flex-col justify-center content-center">
-        <div className="shadow-2xl mt-10 w-2/3 mx-auto my-auto bg-white rounded-b-lg py-12">
-          <p className="font-bold text-2xl mb-10">{questionAuthor} asks would you rather?</p>
-          <div className="flex flex-wrap gap-4 content-center justify-center">
-            <Poll id={id} onClickFunction={this.getFirstQuestion} dimensions={'h-96 w-full'} layout={'w-2/5'}
-              cardText = {
-                <p className="text-white font-normal text-xl">
-                  {questionOne}
-                </p>
-              }
-            />
-              <Poll id={id} onClickFunction={this.getSecondQuestion} dimensions={'h-96 w-full'} layout={'w-2/5'}
+      <div className="flex flex-col justify-center content-center my-20">
+        <div className="w-3/5 mx-auto bg-gray-100 rounded-t py-4">
+            <p className="font-bold text-left pl-5 text-base">Asked by {asker.name}</p>
+        </div>
+        <div className="shadow-2xl w-3/5 mx-auto bg-white rounded-b-lg">
+          <div className="flex flex-row justify-center content-center">
+            <div className="py-20 mx-auto my-auto">
+              <Avatar avatarURL={asker.avatarURL} dimensions={'h-56 w-56'}/>
+            </div>
+            <div className="w-2/3 px-10 flex flex-col gap-4 justify-left my-auto">
+              <p className="font-bold text-xl text-left">Would you rather</p>
+              <Poll dimensions={'h-32'}
                 cardText = {
-                  <p className="text-white font-normal text-xl">
-                    {questionTwo}
+                  <p className="text-white font-normal">
+                    {this.capitalize(question.optionOne.text)}
                   </p>
                 }
               />
+              <Poll dimensions={'h-32'}
+                cardText = {
+                  <p className="text-white font-normal">
+                    {this.capitalize(question.optionTwo.text)}
+                  </p>
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
     )
   }
 }
-function mapStateToProps ({questions, users}) {
+function mapStateToProps ({questions, users}, props) {
+  const id = props.match.params.id
+  const question = questions[id]
   return {
-    questions,
-    users
+    question: question,
+    asker : users[question.author]
   }
 }
 
