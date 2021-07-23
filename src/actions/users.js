@@ -17,6 +17,7 @@ export function addAnswer (answer) {
   }
 }
 
+// this should send something to a reducer, its not doing anything
 export function handleAddAnswer (qid, answer) {
   return (dispatch, getState) => {
     const {authedUser} = getState()

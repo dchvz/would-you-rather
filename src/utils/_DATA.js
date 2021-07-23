@@ -151,7 +151,6 @@ export function _saveQuestion (question) {
   return new Promise((res, rej) => {
     const authedUser = question.author;
     const formattedQuestion = formatQuestion(question);
-
     setTimeout(() => {
       questions = {
         ...questions,
@@ -171,6 +170,8 @@ export function _saveQuestion (question) {
   })
 }
 
+// send this user object to the action so that it is passed to the reducer
+// see the logs in the chirper app to see how this works there, this may not be the case on there
 export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
   return new Promise((res, rej) => {
     setTimeout(() => {

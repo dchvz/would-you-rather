@@ -8,7 +8,7 @@ import { setAuthedUser } from '../actions/authedUser';
 const links = [
   {route: '/', name: 'Home'},
   {route: '/new', name: 'New +'},
-  {route: '/leaderboard', name: 'Leaderboard'}
+  {route: '/leaderboard', name: 'Leaderboard'},
 ]
 // TODO hacer una funcion que redirige al main, ponga como null el authed user
 // TODO hacer que cuando el authed user sea nulo, solo se despliegue la seleccion de usuario

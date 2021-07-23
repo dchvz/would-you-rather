@@ -15,7 +15,6 @@ class PollDetails extends Component {
   register = (item) => {
     const { dispatch, question } = this.props
     dispatch(handleAddAnswer(question.id, item))
-    console.log('the registered item was', item)
   }
 
   render () {
