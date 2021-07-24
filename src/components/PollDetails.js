@@ -18,7 +18,10 @@ class PollDetails extends Component {
   }
 
   render () {
+    // POLL SHUOLD RECEIVE A PROP TO SHOW IT WAAS SELECTED
+    // IF THE USER HAS THE ID OF THE QUESTION IN HIS ANSWERS, THEN CHANGE THE COLOR
     const { question, asker } = this.props
+    const bg =  'from-blue-600 to-blue-500'
     return (
       <div className="flex flex-col justify-center content-center my-20">
         <div className="w-3/5 mx-auto bg-gray-100 rounded-t py-4">
@@ -31,7 +34,10 @@ class PollDetails extends Component {
             </div>
             <div className="w-2/3 px-10 flex flex-col gap-4 justify-left my-auto">
               <p className="font-bold text-xl text-left">Would you rather</p>
-              <Poll id={'optionOne'} dimensions={'h-32'} onClickFunction={this.register}
+              <Poll
+                id={'optionOne'}
+                dimensions={'h-32'}
+                onClickFunction={this.register}
                 cardText = {
                   <p className="text-white font-normal">
                     {this.capitalize(question.optionOne.text)}
