@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import FooterDetails from './FooterDetails'
 import Poll from './Poll'
+import QuestionsEmptyState from './QuestionsEmptyState'
 class Dashboard extends Component {
   state = {
     showAnswered: false
@@ -20,6 +21,11 @@ class Dashboard extends Component {
     this.props.history.push(pollRoute)
   }
 
+  toNewQuestion = (id) => {
+    const newRoute = `/new`
+    this.props.history.push(newRoute)
+  }
+
   render () {
     let { showAnswered } = this.state
     let { answeredQuestions, unAnsweredQuestions, questions,users } = this.props
@@ -27,6 +33,20 @@ class Dashboard extends Component {
     const buttonBG = showAnswered ? 'bg-cerise-red-500' : ''
     const buttonSpacing = showAnswered ? 'translate-x-3' : ''
     const activeQuestion = showAnswered ? 'Check your answered questions' : 'Check some new questions'
+    const emptyStateFunction = showAnswered ? this.handleAnswerChange : this.toNewQuestion
+    const addAnswerMessage = [
+      'There are no more questions to answer to',
+      'Questions can be just about anything, just make sure you have fun',
+      'If no questions are displayed, you can start by creating your own',
+      'Add a new question'
+    ]
+    const checkQuestionsMessage = [
+      'It seems you have not replied to any question',
+      'You may be want to check out the unanswered questions',
+      '',
+      'See unanswered questions'
+    ]
+    const emptyStateTexts = showAnswered ? checkQuestionsMessage: addAnswerMessage
     return (
       <div className="flex flex-col justify-center">
         <p className="font-bold text-2xl">{ activeQuestion }</p>
@@ -39,18 +59,21 @@ class Dashboard extends Component {
           {!showAnswered?<p className="text-white font-medium pl-1">Unanswered</p>: ''}
         </div>
         <div className="flex flex-wrap gap-10 justify-center my-10">
-          {filteredQuestions.map(id => (
-            <Poll key={id} id={id} onClickFunction={this.toDetails} dimensions={'h-64 w-full'} layout={'w-1/4'}
+          {filteredQuestions.length < 1
+            ? <QuestionsEmptyState redirect={emptyStateFunction} textBody={emptyStateTexts} />
+            : filteredQuestions.map(id => (
+              <Poll key={id} id={id} onClickFunction={this.toDetails} dimensions={'h-64 w-full'} layout={'w-1/4'}
               cardText = {
                 <p className="text-white font-normal">
-                  {`Would you rather ${questions[id].optionOne.text} OR ${questions[id].optionTwo.text}?`}
-                </p>
-              }
-              cardFooter = {
-                <FooterDetails id={id} asker={users[questions[id].author]} />
-              }
-            />
-          ))}
+                    {`Would you rather ${questions[id].optionOne.text} OR ${questions[id].optionTwo.text}?`}
+                  </p>
+                }
+                cardFooter = {
+                  <FooterDetails id={id} asker={users[questions[id].author]} />
+                }
+              />
+              ))
+          }
         </div>
       </div>
     )

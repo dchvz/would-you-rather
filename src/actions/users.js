@@ -28,8 +28,6 @@ export function addUserQuestion (question) {
   }
 }
 
-// REVISAR CUANDO HACER LA TECNICA OPTIMISTIC
-// REVISAR SI ESTAN ORDENADOS POR FECHA EN EL DASHBOARD
 export function handleAddAnswer (qid, answer) {
   return (dispatch, getState) => {
     const {authedUser} = getState()
