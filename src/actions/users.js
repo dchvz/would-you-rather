@@ -29,7 +29,6 @@ export function addUserQuestion (question) {
 }
 
 // REVISAR CUANDO HACER LA TECNICA OPTIMISTIC
-// REVISAR LOS REQUISITOS PARA CADA LLAMADA A REDUX ANTES,
 // REVISAR SI ESTAN ORDENADOS POR FECHA EN EL DASHBOARD
 export function handleAddAnswer (qid, answer) {
   return (dispatch, getState) => {
@@ -40,13 +39,10 @@ export function handleAddAnswer (qid, answer) {
       qid,
       answer
     }
-    console.log('the question is', question)
+    dispatch(addVotes(question))
     return saveQuestionAnswer({ authedUser, qid, answer})
       .then(() => {
         dispatch(addQuestionAnswer(question))
-      })
-      .then(() => {
-        dispatch(addVotes(question))
       })
       .then(() => {
         dispatch(hideLoading())

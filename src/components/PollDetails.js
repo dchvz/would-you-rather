@@ -5,8 +5,11 @@ import { handleAddAnswer } from '../actions/users'
 import Avatar from './Avatar'
 import Poll from './Poll'
 
-// TODO check if the data is actually being updated for the users and questions state
 class PollDetails extends Component {
+  state = {
+    selectedOption: ''
+  }
+
   capitalize = word => {
     const lower = word.toLowerCase();
     return word.charAt(0).toUpperCase() + lower.slice(1);
@@ -15,13 +18,84 @@ class PollDetails extends Component {
   register = (item) => {
     const { dispatch, question } = this.props
     dispatch(handleAddAnswer(question.id, item))
+    this.handleAnswerUpdate(item)
+  }
+  /**
+   * obtains the vote for the current question
+   */
+  getAnswer = () => {
+    const { question, authedUser } = this.props
+    let selectedOption = ''
+    if (question.optionOne.votes.includes(authedUser)) {
+      selectedOption = 'optionOne'
+    } else if (question.optionTwo.votes.includes(authedUser)) {
+      selectedOption = 'optionTwo'
+    }
+    return selectedOption
+  }
+
+  getStatistics = () => {
+    let statistics = {
+      optionOne: '',
+      optionTwo: ''
+    }
+    const { selectedOption } = this.state
+    if (selectedOption !== '') {
+      const { question } = this.props
+      // count the answers for opt 1 and 2
+      const optionOneVotes = question.optionOne.votes.length
+      const optionTwoVotes = question.optionTwo.votes.length
+      // count the whole number of answers
+      const totalVotes = optionOneVotes + optionTwoVotes
+      // take the average
+      const optionOnePercentage = (optionOneVotes * 100) / totalVotes
+      const optionTwoPercentage = (optionTwoVotes * 100) / totalVotes
+
+      statistics.optionOne = selectedOption === 'optionOne'
+        ? `${optionOnePercentage}% of users agree with you`
+        : `${optionOnePercentage}% of users disagree with you`
+      statistics.optionTwo = selectedOption === 'optionTwo'
+        ? `${optionTwoPercentage}% of users agree with you`
+        : `${optionTwoPercentage}% of users disagree with you`
+    }
+    console.log('the statistics are', statistics)
+    return statistics
+  }
+
+  handleAnswerUpdate = (value) => {
+    console.log('the answer is being updated by', value)
+    this.setState(() => ({
+      selectedOption: value
+    }))
+    this.getStatistics()
+  }
+
+  componentDidMount() {
+    const selected = this.getAnswer()
+    if (selected !== '') {
+      console.log('the component did mount is being called')
+      console.log(selected)
+      this.handleAnswerUpdate(selected)
+      this.getStatistics()
+    }
+
   }
 
   render () {
-    // POLL SHUOLD RECEIVE A PROP TO SHOW IT WAAS SELECTED
-    // IF THE USER HAS THE ID OF THE QUESTION IN HIS ANSWERS, THEN CHANGE THE COLOR
-    const { question, asker } = this.props
-    const bg =  'from-blue-600 to-blue-500'
+    const { selectedOption } = this.state
+    const { question, asker, votes } = this.props
+    const optionSelected = selectedOption !== ''? true: false
+    const markOptionOne = selectedOption === 'optionOne'? true: false
+    const markOptionTwo = selectedOption === 'optionTwo'? true: false
+    const firstBg = markOptionOne? 'from-blue-600 to-blue-500' : ''
+    const secondBg = markOptionTwo? 'from-blue-600 to-blue-500' : ''
+    let statistics = {}
+    statistics.optionOne = selectedOption === 'optionOne'
+      ? '% of users agree with you'
+      : '% of users disagree with you'
+    statistics.optionTwo = selectedOption === 'optionTwo'
+      ? '% of users agree with you'
+      : '% of users disagree with you'
     return (
       <div className="flex flex-col justify-center content-center my-20">
         <div className="w-3/5 mx-auto bg-gray-100 rounded-t py-4">
@@ -36,19 +110,52 @@ class PollDetails extends Component {
               <p className="font-bold text-xl text-left">Would you rather</p>
               <Poll
                 id={'optionOne'}
+                bgColor={firstBg}
                 dimensions={'h-32'}
                 onClickFunction={this.register}
                 cardText = {
-                  <p className="text-white font-normal">
-                    {this.capitalize(question.optionOne.text)}
-                  </p>
+                  <div className="flex flex-col gap-2 justify-start">
+                    <div className="flex flex-row gap-4">
+                      <p className="text-white font-normal">
+                        {this.capitalize(question.optionOne.text)}
+                      </p>
+                      {markOptionOne &&
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      }
+                    </div>
+                    {optionSelected &&
+                      <p className="flex-1 text-white font-thin">
+                      {`${votes.optionOnePercentage}${statistics.optionOne}`}
+                      </p>
+                    }
+                  </div>
                 }
               />
-              <Poll id={'optionTwo'} dimensions={'h-32'} onClickFunction={this.register}
+              <Poll
+                id={'optionTwo'}
+                bgColor={secondBg}
+                dimensions={'h-32'}
+                onClickFunction={this.register}
                 cardText = {
-                  <p className="text-white font-normal">
-                    {this.capitalize(question.optionTwo.text)}
-                  </p>
+                  <div className="flex flex-col gap-2 justify-start">
+                    <div className="flex flex-row gap-4">
+                      <p className="text-white font-normal">
+                        {this.capitalize(question.optionTwo.text)}
+                      </p>
+                      {markOptionTwo &&
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      }
+                    </div>
+                    {optionSelected &&
+                      <p className="flex-1 text-white font-thin">
+                      {`${votes.optionTwoPercentage}${statistics.optionTwo}` }
+                      </p>
+                    }
+                  </div>
                 }
               />
             </div>
@@ -58,11 +165,18 @@ class PollDetails extends Component {
     )
   }
 }
-function mapStateToProps ({questions, users}, props) {
+function mapStateToProps ({questions, users, authedUser}, props) {
   const id = props.match.params.id
   const question = questions[id]
+  const optionOneVotes = question.optionOne.votes.length
+  const optionTwoVotes = question.optionTwo.votes.length
+  const totalVotes = optionOneVotes + optionTwoVotes
+  const optionOnePercentage = Math.trunc((optionOneVotes * 100) / totalVotes)
+  const optionTwoPercentage = Math.trunc((optionTwoVotes * 100) / totalVotes)
   return {
+    authedUser,
     question: question,
+    votes: { optionOnePercentage, optionTwoPercentage },
     asker : users[question.author]
   }
 }

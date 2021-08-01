@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-// pass the height as props
 class Poll extends Component {
   render () {
     const { id, cardText, cardFooter, onClickFunction, dimensions, layout, bgColor } = this.props
