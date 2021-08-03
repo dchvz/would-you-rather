@@ -2,7 +2,7 @@ let users = {
   sarahedo: {
     id: 'sarahedo',
     name: 'Sarah Edo',
-    avatarURL: 'https://images.generated.photos/pmImbj_l9p4yqkMNU34BcZa8CwK8aBc9Upp3MZvMtrc/rs:fit:256:256/Z3M6Ly9nZW5lcmF0/ZWQtcGhvdG9zL3Yz/XzA5ODU5MDcuanBn.jpg',
+    avatarURL: 'https://images.generated.photos/2PQSPSvs0cqCCbC_-rzYb5nwBkFAgzbOpcb67eP1JyI/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/MjMxNjAyLmpwZw.jpg',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionTwo',

@@ -10,6 +10,7 @@ import Modal from './Modal'
 import Dashboard from './Dashboard'
 import PollDetails from './PollDetails'
 import PollForm from './PollForm'
+import Leaderboard from './Leaderboard'
 import '../App.css';
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
                 <ProtectedRoute path='/' exact component={Dashboard} isLogged={isLogged} />
                 <ProtectedRoute path='/poll/:id' component={PollDetails} isLogged={isLogged}/>
                 <ProtectedRoute path='/new' component={PollForm} isLogged={isLogged}/>
+                <ProtectedRoute path='/leaderboard' component={Leaderboard} isLogged={isLogged}/>
                 <Route exact path="/login" component={Modal} userRedux={users} />
                 <Route path="*" component={() => "404 NOT FOUND"} />
                 </Switch>

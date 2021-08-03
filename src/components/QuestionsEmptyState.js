@@ -6,7 +6,7 @@ class EmptyState extends Component {
     const { redirect, textBody } = this.props
     return (
       <div>
-        <img src='/emptyState.png' alt="empty state"/>
+        <img src='/emptyState.png' alt="empty state" className="h-72" />
         <p className="font-medium text-lg mt-5">{textBody[0]}</p>
         <div className="font-extralight text-center whitespace-pre">
           {textBody[1]}
