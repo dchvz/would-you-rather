@@ -13,7 +13,7 @@ function Leaderboard (props) {
           <p className="font-medium text-3xl">#1 Ranked User</p>
           <p className="font-bold text-6xl">{sortedRanks[0].name}</p>
         </div>
-        <img src='/trophy.png' alt="trophy" className="h-max" />
+        <img src='/trophy.svg' alt="trophy" className="h-max" />
       </div>
       <div className="flex flex-col justify-center items-center my-10">
         {sortedRanks.map((rankedUser, index) => (
