@@ -32,7 +32,7 @@ class Dashboard extends Component {
     const filteredQuestions = showAnswered ? answeredQuestions : unAnsweredQuestions
     const buttonBG = showAnswered ? 'bg-cerise-red-500' : ''
     const buttonSpacing = showAnswered ? 'translate-x-3' : ''
-    const activeQuestion = showAnswered ? 'Check your answered questions' : 'Check some new questions'
+    const activeQuestion = showAnswered ? 'Your previous answers' : 'Questions you can answer'
     const emptyStateFunction = showAnswered ? this.handleAnswerChange : this.toNewQuestion
     const addAnswerMessage = [
       'There are no more questions to answer to',
@@ -62,7 +62,13 @@ class Dashboard extends Component {
           {filteredQuestions.length < 1
             ? <QuestionsEmptyState redirect={emptyStateFunction} textBody={emptyStateTexts} />
             : filteredQuestions.map(id => (
-              <Poll key={id} id={id} onClickFunction={this.toDetails} dimensions={'h-64 w-full'} layout={'w-1/4'}
+              <Poll
+              key={id}
+              id={id}
+              onClickFunction={this.toDetails}
+              dimensions={'h-64 w-full'}
+              layout={'w-1/4'}
+              roundness={'rounded-t-lg'}
               cardText = {
                 <p className="text-white font-normal">
                     {`Would you rather ${questions[id].optionOne.text} OR ${questions[id].optionTwo.text}?`}
