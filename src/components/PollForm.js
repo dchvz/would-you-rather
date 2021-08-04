@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { handleAddQuestion } from '../actions/questions'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import '../App.css'
 class PollForm extends Component {
   state = {
@@ -13,6 +14,9 @@ class PollForm extends Component {
     const { optionOneText, optionTwoText } = this.state
     const { dispatch } = this.props
     dispatch(handleAddQuestion({optionOneText, optionTwoText}))
+      .then(() => {
+        this.props.history.push('/')
+      })
   }
   handleInputChange = (event) => {
     const value = event.target.value
@@ -63,4 +67,4 @@ class PollForm extends Component {
   }
 }
 
-export default connect()(PollForm)
+export default withRouter(connect()(PollForm))
