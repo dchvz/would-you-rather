@@ -126,8 +126,8 @@ class PollDetails extends Component {
                       }
                     </div>
                     {optionSelected &&
-                      <p className="flex-1 text-white font-thin">
-                      {`${votes.optionOnePercentage}${statistics.optionOne}`}
+                      <p className="flex-1 text-white font-thin text-left">
+                      {`${votes.optionOnePercentage}${statistics.optionOne} (${votes.optionOneVotes} out of ${votes.totalVotes})`}
                       </p>
                     }
                   </div>
@@ -141,7 +141,7 @@ class PollDetails extends Component {
                 cardText = {
                   <div className="flex flex-col gap-2 justify-start">
                     <div className="flex flex-row gap-4">
-                      <p className="text-white font-normal">
+                      <p className="text-white font-normal text-left">
                         {this.capitalize(question.optionTwo.text)}
                       </p>
                       {markOptionTwo &&
@@ -151,8 +151,8 @@ class PollDetails extends Component {
                       }
                     </div>
                     {optionSelected &&
-                      <p className="flex-1 text-white font-thin">
-                      {`${votes.optionTwoPercentage}${statistics.optionTwo}` }
+                      <p className="flex-1 text-white font-thin text-left">
+                      {`${votes.optionTwoPercentage}${statistics.optionTwo} (${votes.optionTwoVotes} out of ${votes.totalVotes})` }
                       </p>
                     }
                   </div>
@@ -171,12 +171,12 @@ function mapStateToProps ({questions, users, authedUser}, props) {
   const optionOneVotes = question.optionOne.votes.length
   const optionTwoVotes = question.optionTwo.votes.length
   const totalVotes = optionOneVotes + optionTwoVotes
-  const optionOnePercentage = Math.trunc((optionOneVotes * 100) / totalVotes)
-  const optionTwoPercentage = Math.trunc((optionTwoVotes * 100) / totalVotes)
+  const optionOnePercentage = Math.round(((optionOneVotes * 100) / totalVotes), -1)
+  const optionTwoPercentage = Math.round(((optionTwoVotes * 100) / totalVotes), -1)
   return {
     authedUser,
     question: question,
-    votes: { optionOnePercentage, optionTwoPercentage },
+    votes: { optionOnePercentage, optionTwoPercentage, optionOneVotes, optionTwoVotes, totalVotes},
     asker : users[question.author]
   }
 }
