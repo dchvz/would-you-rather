@@ -16,6 +16,9 @@ module.exports = {
           '800': '#8f2b43',
           '900': '#752336'
         }
+      },
+      fontSize: {
+        'custom-lg': '15rem'
       }
     },
   },

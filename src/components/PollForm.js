@@ -31,7 +31,7 @@ class PollForm extends Component {
       <div className="w-2/5 flex justify-center py-10 my-20 shadow-2xl mx-auto bg-white rounded-b-lg">
         <form className="w-full max-w-sm justify-center" onSubmit={this.submitPoll}>
           <p className="font-bold text-2xl mb-10">Would you rather</p>
-          <div className="md:flex md:items-center mb-6">
+          <div className="md:flex md:items-center">
             <input
               className="placeholder-gray-500 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-cerise-red-600"
               value = {optionOneText}

@@ -10,8 +10,7 @@ const links = [
   {route: '/new', name: 'New +'},
   {route: '/leaderboard', name: 'Leaderboard'},
 ]
-// TODO hacer una funcion que redirige al main, ponga como null el authed user
-// TODO hacer que cuando el authed user sea nulo, solo se despliegue la seleccion de usuario
+
 class Nav extends Component {
   handleLogOut = () => {
     const { dispatch } = this.props
@@ -46,10 +45,12 @@ class Nav extends Component {
     )
   }
 }
+
 function mapStateToProps ({users, authedUser}) {
   const currentUser = users[authedUser]
   return {
     currentUser
   }
 }
+
 export default connect(mapStateToProps)(Nav)

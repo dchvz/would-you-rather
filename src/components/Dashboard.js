@@ -17,7 +17,7 @@ class Dashboard extends Component {
   }
 
   toDetails = (id) => {
-    const pollRoute = `/poll/${id}`
+    const pollRoute = `/questions/${id}`
     this.props.history.push(pollRoute)
   }
 
@@ -32,7 +32,7 @@ class Dashboard extends Component {
     const filteredQuestions = showAnswered ? answeredQuestions : unAnsweredQuestions
     const buttonBG = showAnswered ? 'bg-cerise-red-500' : ''
     const buttonSpacing = showAnswered ? 'translate-x-3' : ''
-    const activeQuestion = showAnswered ? 'Your previous answers' : 'Questions you can answer'
+    const activeQuestion = showAnswered ? 'Answered questions' : 'Unanswered Questions'
     const emptyStateFunction = showAnswered ? this.handleAnswerChange : this.toNewQuestion
     const addAnswerMessage = [
       'There are no more questions to answer to',
@@ -46,7 +46,7 @@ class Dashboard extends Component {
       '',
       'See unanswered questions'
     ]
-    const emptyStateTexts = showAnswered ? checkQuestionsMessage: addAnswerMessage
+    const emptyStateMessage = showAnswered ? checkQuestionsMessage: addAnswerMessage
     return (
       <div className="flex flex-col justify-center">
         <p className="font-bold text-2xl">{ activeQuestion }</p>
@@ -60,7 +60,7 @@ class Dashboard extends Component {
         </div>
         <div className="flex flex-wrap gap-10 justify-center my-10">
           {filteredQuestions.length < 1
-            ? <QuestionsEmptyState redirect={emptyStateFunction} textBody={emptyStateTexts} />
+            ? <QuestionsEmptyState redirect={emptyStateFunction} textBody={emptyStateMessage} />
             : filteredQuestions.map(id => (
               <Poll
               key={id}
