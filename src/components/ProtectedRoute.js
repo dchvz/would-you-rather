@@ -3,9 +3,11 @@ import { Route, Redirect } from "react-router-dom"
 
 export const ProtectedRoute = ({
   isLogged,
+  fallbackRoute,
   component: Component,
   ...rest
 }) => {
+  const defaultRoute = fallbackRoute || '/login'
   return (
     <Route
       {...rest}
@@ -16,7 +18,7 @@ export const ProtectedRoute = ({
           return (
             <Redirect
               to={{
-                pathname: '/login',
+                pathname: defaultRoute,
                 state: {
                   from: props.location
                 }

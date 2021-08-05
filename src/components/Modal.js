@@ -7,7 +7,6 @@ import ComboBox from './ComboBox'
 
 class Modal extends Component {
   state = {
-    allusers: this.props.users,
     selectedUser: this.props.users['sarahedo']
   }
 

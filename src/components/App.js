@@ -19,7 +19,7 @@ class App extends Component {
     this.props.dispatch(getInitialData())
   }
   render () {
-    const { loading, isLogged, users } = this.props
+    const { loading, isLogged } = this.props
     return (
       <Router>
         <Fragment>
@@ -32,10 +32,10 @@ class App extends Component {
               : <div>
                 <Switch>
                 <ProtectedRoute path='/' exact component={Dashboard} isLogged={isLogged} />
-                <ProtectedRoute path='/questions/:id' component={PollDetails} isLogged={isLogged}/>
+                <ProtectedRoute path='/questions/:id' component={PollDetails} isLogged={isLogged} fallbackRoute={'/not-found'}/>
                 <ProtectedRoute path='/new' component={PollForm} isLogged={isLogged}/>
                 <ProtectedRoute path='/leaderboard' component={Leaderboard} isLogged={isLogged}/>
-                <Route exact path="/login" component={Modal} userRedux={users} />
+                <Route exact path="/login" component={Modal} />
                 <Route path="*" component={NotFound} />
                 </Switch>
               </div>
@@ -51,7 +51,6 @@ function mapStateToProps ({users, questions, authedUser}) {
   return {
     loading: Object.keys(users).length === 0 && Object.keys(questions).length === 0,
     isLogged: authedUser !== null,
-    users
   }
 }
 
