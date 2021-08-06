@@ -34,40 +34,11 @@ class PollDetails extends Component {
     return selectedOption
   }
 
-  getStatistics = () => {
-    let statistics = {
-      optionOne: '',
-      optionTwo: ''
-    }
-    const { selectedOption } = this.state
-    if (selectedOption !== '') {
-      const { question } = this.props
-      // count the answers for opt 1 and 2
-      const optionOneVotes = question.optionOne.votes.length
-      const optionTwoVotes = question.optionTwo.votes.length
-      // count the whole number of answers
-      const totalVotes = optionOneVotes + optionTwoVotes
-      // take the average
-      const optionOnePercentage = (optionOneVotes * 100) / totalVotes
-      const optionTwoPercentage = (optionTwoVotes * 100) / totalVotes
-
-      statistics.optionOne = selectedOption === 'optionOne'
-        ? `${optionOnePercentage}% of users agree with you`
-        : `${optionOnePercentage}% of users disagree with you`
-      statistics.optionTwo = selectedOption === 'optionTwo'
-        ? `${optionTwoPercentage}% of users agree with you`
-        : `${optionTwoPercentage}% of users disagree with you`
-    }
-    console.log('the statistics are', statistics)
-    return statistics
-  }
-
   handleAnswerUpdate = (value) => {
     console.log('the answer is being updated by', value)
     this.setState(() => ({
       selectedOption: value
     }))
-    this.getStatistics()
   }
 
   componentDidMount() {
@@ -76,9 +47,7 @@ class PollDetails extends Component {
       console.log('the component did mount is being called')
       console.log(selected)
       this.handleAnswerUpdate(selected)
-      this.getStatistics()
     }
-
   }
 
   render () {

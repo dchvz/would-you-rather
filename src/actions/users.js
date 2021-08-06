@@ -1,5 +1,4 @@
-import { showLoading, hideLoading } from 'react-redux-loading'
-import { addVotes } from './questions'
+import { addVotes, deleteVotes } from './questions'
 import { saveQuestionAnswer } from '../utils/api'
 
 export const RECEIVE_USERS = 'RECEIVE USERS'
@@ -21,7 +20,6 @@ export function addQuestionAnswer (question) {
 }
 
 export function addUserQuestion (question) {
-  console.log('the question is', question)
   return {
     type: ADD_QUESTION,
     question
@@ -31,7 +29,6 @@ export function addUserQuestion (question) {
 export function handleAddAnswer (qid, answer) {
   return (dispatch, getState) => {
     const {authedUser} = getState()
-    dispatch(showLoading())
     const question = {
       authedUser,
       qid,
@@ -42,8 +39,9 @@ export function handleAddAnswer (qid, answer) {
       .then(() => {
         dispatch(addQuestionAnswer(question))
       })
-      .then(() => {
-        dispatch(hideLoading())
+      .catch(() => {
+        console.log('There was an error adding the answer. Try again')
+        dispatch(deleteVotes(question))
       })
   }
 }

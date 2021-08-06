@@ -5,6 +5,7 @@ import { showLoading, hideLoading } from 'react-redux-loading'
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const SAVE_QUESTIONS = 'SAVE_QUESTIONS'
 export const ADD_VOTES = 'ADD_VOTES'
+export const DELETE_VOTES = 'DELETE_VOTES'
 
 export function receiveQuestions (questions) {
   return {
@@ -23,6 +24,13 @@ export function addQuestion (question) {
 export function addVotes (question) {
   return {
     type: ADD_VOTES,
+    question
+  }
+}
+
+export function deleteVotes (question) {
+  return {
+    type: DELETE_VOTES,
     question
   }
 }

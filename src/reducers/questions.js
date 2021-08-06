@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS, SAVE_QUESTIONS, ADD_VOTES } from '../actions/questions'
+import { RECEIVE_QUESTIONS, SAVE_QUESTIONS, ADD_VOTES, DELETE_VOTES } from '../actions/questions'
 
 export default function questions (state = {}, action) {
   switch (action.type) {
@@ -20,6 +20,17 @@ export default function questions (state = {}, action) {
           [action.question.answer]: {
             ...state[action.question.qid][action.question.answer],
             votes: state[action.question.qid][action.question.answer].votes.concat([action.question.authedUser])
+          }
+        }
+      }
+    case DELETE_VOTES:
+      return {
+        ...state,
+        [action.question.qid]: {
+          ...state[action.question.qid],
+          [action.question.answer]: {
+            ...state[action.question.qid][action.question.answer],
+            votes: state[action.question.qid][action.question.answer].votes.filter(x => x !== action.question.authedUser)
           }
         }
       }
