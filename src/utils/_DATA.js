@@ -2,7 +2,7 @@ let users = {
   sarahedo: {
     id: 'sarahedo',
     name: 'Sarah Edo',
-    avatarURL: 'https://images.generated.photos/2PQSPSvs0cqCCbC_-rzYb5nwBkFAgzbOpcb67eP1JyI/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/MjMxNjAyLmpwZw.jpg',
+    avatarURL: 'https://images.pexels.com/photos/3404200/pexels-photo-3404200.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionTwo',
@@ -14,7 +14,7 @@ let users = {
   tylermcginnis: {
     id: 'tylermcginnis',
     name: 'Tyler McGinnis',
-    avatarURL: 'https://images.generated.photos/I8Ar01cqyE5H37HlB7WgDk7BUrAl4jAgFbiFa8OrOVQ/rs:fit:256:256/Z3M6Ly9nZW5lcmF0/ZWQtcGhvdG9zL3Yz/XzAzMTA4NTcuanBn.jpg',
+    avatarURL: 'https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -24,7 +24,7 @@ let users = {
   johndoe: {
     id: 'johndoe',
     name: 'John Doe',
-    avatarURL: 'https://images.generated.photos/-7sQVRneogxXWGq8hk6huPjo6zjjMnrdBij-xxjQRxw/rs:fit:256:256/Z3M6Ly9nZW5lcmF0/ZWQtcGhvdG9zL3Yz/XzAwMDAyOTAuanBn.jpg',
+    avatarURL: 'https://images.pexels.com/photos/90764/man-studio-portrait-light-90764.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
