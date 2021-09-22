@@ -26,12 +26,13 @@ class Dashboard extends Component {
     this.props.history.push(newRoute)
   }
 
+  // I took some inspiration on this codepen to develop the red toggle https://codepen.io/lhermann/pen/EBGZRZ
   render () {
     let { showAnswered } = this.state
     let { answeredQuestions, unAnsweredQuestions, questions,users } = this.props
     const filteredQuestions = showAnswered ? answeredQuestions : unAnsweredQuestions
     const buttonBG = showAnswered ? 'bg-cerise-red-500' : ''
-    const buttonSpacing = showAnswered ? 'translate-x-3' : ''
+    const buttonSpacing = showAnswered ? 'translate-x-6' : ''
     const activeQuestion = showAnswered ? 'Answered questions' : 'Unanswered Questions'
     const emptyStateFunction = showAnswered ? this.handleAnswerChange : this.toNewQuestion
     const addAnswerMessage = [
@@ -51,12 +52,12 @@ class Dashboard extends Component {
       <div className="flex flex-col justify-center">
         <p className="font-bold text-2xl">{ activeQuestion }</p>
         <div
-          className={`w-36 h-10 mx-auto mt-4 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out cursor-pointer ${buttonBG}`}
+          className={`w-44 h-10 mx-auto mt-4 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out cursor-pointer ${buttonBG}`}
           onClick={this.handleAnswerChange}
         >
-          {showAnswered?<p className="text-white font-medium pl-4">Answered</p>: ''}
+          {showAnswered?<p className="text-white font-medium pl-4">📝 Answered</p>: ''}
           <div className={`bg-white w-8 h-8 rounded-full shadow-md transform duration-300 ease-in-out items-center ${buttonSpacing}`}/>
-          {!showAnswered?<p className="text-white font-medium pl-1">Unanswered</p>: ''}
+          {!showAnswered?<p className="text-white font-medium pl-2">✍️ Unanswered</p>: ''}
         </div>
         <div className="flex flex-wrap gap-10 justify-center my-10">
           {filteredQuestions.length < 1
