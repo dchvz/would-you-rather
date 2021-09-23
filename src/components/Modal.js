@@ -25,15 +25,16 @@ class Modal extends Component {
    * dispatches the action to authenticate the user in the rest of the app, redirects
    * @param {string} id
    */
-  handleUserLogin = (id) => {
+  handleUserLogin = (id, path = '/') => {
     const { dispatch } = this.props
     dispatch(setAuthedUser(id))
-    this.props.history.push('/')
+    this.props.history.push(path)
   }
 
   render () {
     const { users } = this.props
     const { selectedUser } = this.state
+    const { from } = this.props.location.state || { from : { pathname: '/' } }
     const userIds = Object.keys(users)
     return (
       <div className="flex w-max mx-auto items-center h-auto">
@@ -47,7 +48,7 @@ class Modal extends Component {
             <ComboBox items={userIds} handleUserUpdate={this.handleUserUpdate} />
             <button
               className="w-64 bg-cerise-red-500 hover:bg-cerise-red-400 text-white font-bold py-2 px-4 rounded-full mb-4"
-              onClick={() => this.handleUserLogin(selectedUser.id)}
+              onClick={() => this.handleUserLogin(selectedUser.id, from.pathname)}
             >
               Accept
             </button>

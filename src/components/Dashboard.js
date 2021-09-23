@@ -22,7 +22,7 @@ class Dashboard extends Component {
   }
 
   toNewQuestion = (id) => {
-    const newRoute = `/new`
+    const newRoute = `/add`
     this.props.history.push(newRoute)
   }
 

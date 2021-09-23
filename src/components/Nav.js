@@ -7,7 +7,7 @@ import { setAuthedUser } from '../actions/authedUser';
 
 const links = [
   {route: '/', name: 'Home'},
-  {route: '/new', name: 'New +'},
+  {route: '/add', name: 'New +'},
   {route: '/leaderboard', name: 'Leaderboard'},
 ]
 
