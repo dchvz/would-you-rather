@@ -34,6 +34,7 @@ class Modal extends Component {
   render () {
     const { users } = this.props
     const { selectedUser } = this.state
+    // reference about how to get the referred location for redirection https://reactrouter.com/web/api/location
     const { from } = this.props.location.state || { from : { pathname: '/' } }
     const userIds = Object.keys(users)
     return (
