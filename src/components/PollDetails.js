@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
-import { withRouter } from "react-router"
+import { withRouter, Redirect } from "react-router"
 import { connect } from 'react-redux'
 import { handleAddAnswer } from '../actions/users'
 import Avatar from './Avatar'
 import Poll from './Poll'
-
 class PollDetails extends Component {
   state = {
     selectedOption: ''
@@ -26,6 +25,7 @@ class PollDetails extends Component {
   getAnswer = () => {
     const { question, authedUser } = this.props
     let selectedOption = ''
+    if(!question) return selectedOption
     if (question.optionOne.votes.includes(authedUser)) {
       selectedOption = 'optionOne'
     } else if (question.optionTwo.votes.includes(authedUser)) {
@@ -53,6 +53,8 @@ class PollDetails extends Component {
   render () {
     const { selectedOption } = this.state
     const { question, asker, votes } = this.props
+    if(!question) return <Redirect to='/not-found'/>
+
     const optionSelected = selectedOption !== ''? true: false
     const markOptionOne = selectedOption === 'optionOne'? true: false
     const markOptionTwo = selectedOption === 'optionTwo'? true: false
@@ -137,16 +139,16 @@ class PollDetails extends Component {
 function mapStateToProps ({questions, users, authedUser}, props) {
   const id = props.match.params.id
   const question = questions[id]
-  const optionOneVotes = question.optionOne.votes.length
-  const optionTwoVotes = question.optionTwo.votes.length
-  const totalVotes = optionOneVotes + optionTwoVotes
-  const optionOnePercentage = Math.round(((optionOneVotes * 100) / totalVotes), -1)
-  const optionTwoPercentage = Math.round(((optionTwoVotes * 100) / totalVotes), -1)
+  const optionOneVotes = question ? question.optionOne.votes.length : undefined
+  const optionTwoVotes = question ? question.optionTwo.votes.length : undefined
+  const totalVotes = question ? (optionOneVotes + optionTwoVotes )  : undefined
+  const optionOnePercentage = question ? Math.round(((optionOneVotes * 100) / totalVotes), -1)  : undefined
+  const optionTwoPercentage = question ? Math.round(((optionTwoVotes * 100) / totalVotes), -1)  : undefined
   return {
     authedUser,
     question: question,
-    votes: { optionOnePercentage, optionTwoPercentage, optionOneVotes, optionTwoVotes, totalVotes},
-    asker : users[question.author]
+    votes: question ? { optionOnePercentage, optionTwoPercentage, optionOneVotes, optionTwoVotes, totalVotes} : undefined,
+    asker : question ? users[question.author] : undefined
   }
 }
 

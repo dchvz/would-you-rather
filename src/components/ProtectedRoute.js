@@ -5,11 +5,10 @@ import { Route, Redirect } from "react-router-dom"
 
 export const ProtectedRoute = ({
   isLogged,
-  fallbackRoute,
   component: Component,
   ...rest
 }) => {
-  const defaultRoute = fallbackRoute || '/login'
+  const defaultRoute = '/login'
   return (
     <Route
       {...rest}

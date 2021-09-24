@@ -32,7 +32,7 @@ class App extends Component {
               : <div>
                 <Switch>
                 <ProtectedRoute path='/' exact component={Dashboard} isLogged={isLogged} />
-                <ProtectedRoute path='/questions/:id' component={PollDetails} isLogged={isLogged} fallbackRoute={'/not-found'}/>
+                <ProtectedRoute path='/questions/:id' component={PollDetails} isLogged={isLogged}/>
                 <ProtectedRoute path='/add' component={PollForm} isLogged={isLogged}/>
                 <ProtectedRoute path='/leaderboard' component={Leaderboard} isLogged={isLogged}/>
                 <Route exact path="/login" component={Modal} />
